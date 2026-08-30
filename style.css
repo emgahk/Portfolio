@@ -1,15 +1,23 @@
 :root {
-  --ink: #151515;
-  --paper: #fff;
-  /* f3f0e9 */
-  --cream: #e8e1d5;
-  --accent: #b8c0a2;
-  --muted: #77756f;
-  --line: rgba(21, 21, 21, 0.18);
-  --white: #ffffff;
+  /* ===== PNU 로고 기반 브랜드 팔레트 =====
+     Royal Blue : 로고의 주 배경색
+     Yellow     : 로고의 테두리/상징 강조색
+     White      : 로고의 글자와 책 요소
+     Ink        : 가독성을 위한 짙은 블루 블랙 */
+  --blue: #26458E;
+  --blue-deep: #1F3977;
+  --blue-soft: #36569D;
+  --yellow: #FFDE17;
+  --yellow-soft: #FBE762;
+  --white: #FFFFFF;
+  --paper: #F8FAFF;
+  --cream: #EEF2FA;
+  --accent: #FFDE17;
+  --accent-soft: #FFF4B8;
+  --ink: #17213D;
+  --muted: #66708A;
+  --line: rgba(38, 69, 142, 0.18);
   --max: 1420px;
-  --blue: #000080;
-  --yellow: #FFFF00;
 }
 
 * {
@@ -71,7 +79,7 @@ button {
 
 .site-header.scrolled {
   height: 68px;
-  background: rgba(243, 240, 233, .9);
+  background: rgba(255, 255, 255, .94);
   border-bottom: 1px solid var(--line);
   backdrop-filter: blur(14px);
 }
@@ -297,7 +305,7 @@ button {
 }
 
 .fontcolor1 {
-  color: #000080;
+  color: var(--blue);
   font-weight: bold;
 }
 
@@ -515,7 +523,7 @@ button {
   line-height: .96;
   letter-spacing: -.05em;
   font-weight: 500;
-  color: #000080;
+  color: var(--blue);
 }
 
 .section-heading.light {
@@ -623,8 +631,8 @@ mark {
 }
 
 .teaching {
-  background: var(--ink);
-  color: var(--paper);
+  background: linear-gradient(135deg, var(--blue-deep), var(--blue));
+  color: var(--white);
 }
 
 .teaching>* {
@@ -642,12 +650,14 @@ mark {
 }
 
 .philosophy-card {
+  position: relative;
   background: var(--blue);
   padding: 40px;
   min-height: 330px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  border-top: 3px solid var(--yellow);
 }
 
 .card-no {
@@ -772,17 +782,48 @@ mark {
 
 .pub-item {
   display: grid;
-  grid-template-columns: 1fr 40px;
+  grid-template-columns: minmax(0, 1fr) 40px;
   gap: 30px;
   align-items: center;
-  padding: 30px 0;
+  padding: 30px 14px;
+  margin: 0 -14px;
   border-bottom: 1px solid var(--line);
-  transition: padding .3s ease;
+  border-radius: 10px;
+
+  /*
+    Selected Works hover 효과
+    padding 값을 hover 때 바꾸지 않기 때문에
+    제목 영역의 폭이 줄어들지 않고 갑작스러운 줄바꿈도 생기지 않습니다.
+  */
+  transition:
+    transform .3s cubic-bezier(.2, .65, .3, 1),
+    background-color .3s ease;
 }
 
 .pub-item:hover {
-  padding-left: 14px;
-  padding-right: 14px;
+  transform: translateX(8px);
+  background-color: transparent;
+}
+
+/* 논문 제목 링크도 부드럽게 반응 */
+.pub-item h3 a {
+  transition: opacity .25s ease;
+}
+
+.pub-item:hover h3 a {
+  opacity: 1;
+}
+
+/* 오른쪽 화살표는 살짝 위/오른쪽으로 움직여 클릭 가능성을 강조 */
+.pub-arrow {
+  transition:
+    transform .3s cubic-bezier(.2, .65, .3, 1),
+    opacity .3s ease;
+}
+
+.pub-item:hover .pub-arrow {
+  transform: translate(5px, -5px);
+  opacity: .7;
 }
 
 .pub-item small {
@@ -843,14 +884,6 @@ mark {
   gap: 20px;
 }
 
-.portfolio-pdf-card:hover {
-  transform: translateY(-6px);
-
-  background: var(--blue);
-
-  border-color: rgba(20, 20, 20, 0.4);
-}
-
 .portfolio-pdf-card {
   position: relative;
 
@@ -864,9 +897,9 @@ mark {
   color: var(--ink);
   text-decoration: none;
 
-  background: var(--blue);
+  background: linear-gradient(145deg, var(--blue-soft), var(--blue-deep));
 
-  border: 1px solid rgba(20, 20, 20, 0.15);
+  border: 1px solid rgba(255, 222, 23, 0.22);
   border-radius: 18px;
 
   backdrop-filter: blur(10px);
@@ -874,10 +907,53 @@ mark {
 
   overflow: hidden;
 
+  /*
+    Portfolio 카드 인터랙션
+    hover 시 padding이나 width를 바꾸지 않기 때문에
+    카드 내부 텍스트가 밀리거나 줄바꿈되지 않습니다.
+  */
   transition:
-    transform 0.35s ease,
-    background 0.35s ease,
-    border-color 0.35s ease;
+    transform 0.35s cubic-bezier(.2, .65, .3, 1),
+    box-shadow 0.35s ease,
+    border-color 0.35s ease,
+    filter 0.35s ease;
+}
+
+.portfolio-pdf-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(20, 20, 20, 0.32);
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.14);
+  filter: brightness(1.04);
+}
+
+/* 제목/설명은 폭을 유지하고 투명도만 부드럽게 변화 */
+.portfolio-pdf-card h3,
+.portfolio-pdf-card p,
+.portfolio-type,
+.portfolio-number {
+  transition:
+    transform 0.3s cubic-bezier(.2, .65, .3, 1),
+    opacity 0.3s ease;
+}
+
+.portfolio-pdf-card:hover h3 {
+  transform: translateX(4px);
+}
+
+.portfolio-pdf-card:hover p {
+  opacity: 0.88;
+}
+
+/* 오른쪽 화살표/재생 아이콘은 카드 hover 시 대각선으로 이동 */
+.portfolio-arrow {
+  transition:
+    transform 0.3s cubic-bezier(.2, .65, .3, 1),
+    opacity 0.3s ease;
+}
+
+.portfolio-pdf-card:hover .portfolio-arrow {
+  transform: translate(5px, -5px);
+  opacity: 0.85;
 }
 
 .portfolio-type {
@@ -930,9 +1006,6 @@ mark {
   transition: transform 0.3s ease;
 }
 
-.portfolio-pdf-card:hover .portfolio-arrow {
-  transform: translate(5px, -5px);
-}
 
 .project-card-large {
   grid-row: span 2;
@@ -976,6 +1049,7 @@ mark {
 .quote-section {
   padding: 130px 7vw;
   background: var(--yellow);
+  color: var(--blue-deep);
   text-align: center;
 }
 
@@ -993,12 +1067,13 @@ mark {
 }
 
 .contact {
-  background: var(--blue);
-  color: var(--paper);
+  background: linear-gradient(135deg, var(--blue-deep), var(--blue));
+  color: var(--white);
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 8vw;
   align-items: end;
+  border-top: 5px solid var(--yellow);
 }
 
 .contact-copy h2 {
@@ -1345,7 +1420,7 @@ body::before {
   background-position: center;
   background-repeat: no-repeat;
 
-  opacity: 0.12;
+  opacity: 0.045;
 
   pointer-events: none;
   z-index: -1;
@@ -1353,4 +1428,47 @@ body::before {
 
 section {
   background: transparent;
+}
+/* ===== PNU 브랜드 디테일 ===== */
+.section-index,
+.eyebrow {
+  color: var(--blue);
+}
+
+.teaching .section-index,
+.contact .section-index {
+  color: var(--yellow);
+}
+
+.portfolio-number {
+  color: var(--yellow);
+  opacity: .9;
+}
+
+.portfolio-pdf-card:hover {
+  border-color: var(--yellow);
+  box-shadow: 0 18px 40px rgba(38, 69, 142, .22);
+}
+
+.pub-item:hover .pub-arrow {
+  color: var(--blue);
+}
+
+.intro-strip i {
+  color: var(--yellow);
+  opacity: 1;
+}
+
+::selection {
+  background: var(--yellow);
+  color: var(--blue-deep);
+}
+
+/* Selected Works: hover 시 배경과 글자 투명도 변화 없이 유지 */
+.pub-item:hover {
+  background-color: transparent;
+}
+
+.pub-item:hover h3 a {
+  opacity: 1;
 }
