@@ -3265,38 +3265,42 @@ footer,
 
 
 /* ==========================================================
-   POSITION — guaranteed mobile-only line break
-   Uses a dedicated span instead of <br> so the break cannot be
-   lost to browser/display quirks. Overrides generic profile span badge styles.
+   POSITION — mobile-only line break, no badge styling
+   A div is used so the generic .profile-list dd span badge rule
+   can never affect "College of Liberal Arts".
    ========================================================== */
 .profile-list dd.position-value .position-department {
   display: inline;
   margin: 0;
   padding: 0;
+  border: 0;
   background: transparent;
   color: inherit;
-  font: inherit;
+  font-family: inherit;
   font-size: inherit;
+  font-style: inherit;
   font-weight: inherit;
   letter-spacing: inherit;
   line-height: inherit;
-  border: 0;
-  border-radius: 0;
-  white-space: normal;
-}
-
-.profile-list dd.position-value .position-department::before {
-  content: " ";
+  text-transform: none;
+  box-shadow: none;
 }
 
 @media (max-width: 650px) {
   .profile-list dd.position-value .position-department {
     display: block !important;
-    width: 100%;
-    white-space: nowrap;
-  }
-
-  .profile-list dd.position-value .position-department::before {
-    content: "";
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+    color: inherit !important;
+    font-family: inherit !important;
+    font-size: inherit !important;
+    font-style: inherit !important;
+    font-weight: inherit !important;
+    letter-spacing: inherit !important;
+    line-height: inherit !important;
+    white-space: nowrap !important;
+    box-shadow: none !important;
   }
 }
