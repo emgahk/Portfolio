@@ -228,3 +228,79 @@ window.addEventListener('keydown', (event) => {
     closePortfolioVideo();
   }
 });
+
+
+// Portfolio main label active state (EDUC 1/2/3 + CIVer Photos)
+const portfolioMainLink = document.querySelector('.portfolio-main-link');
+
+function updatePortfolioMainState() {
+  if (!portfolioMainLink) return;
+  const activePortfolioLink = document.querySelector('.portfolio-dropdown-menu a.active');
+  portfolioMainLink.classList.toggle('active', Boolean(activePortfolioLink));
+}
+
+window.addEventListener('scroll', updatePortfolioMainState, { passive: true });
+updatePortfolioMainState();
+
+// ============================================================
+// CIVer Photos fullscreen lightbox
+// ============================================================
+const civerPhotoTiles = [...document.querySelectorAll('[data-civer-photo]')];
+const civerLightbox = document.getElementById('civerLightbox');
+const civerLightboxImage = document.getElementById('civerLightboxImage');
+const civerLightboxCaption = document.getElementById('civerLightboxCaption');
+const civerLightboxCounter = document.getElementById('civerLightboxCounter');
+const civerCloseButtons = document.querySelectorAll('[data-civer-close]');
+const civerPrevButton = document.querySelector('[data-civer-prev]');
+const civerNextButton = document.querySelector('[data-civer-next]');
+let currentCiverPhotoIndex = 0;
+
+function renderCiverPhoto(index) {
+  if (!civerPhotoTiles.length || !civerLightboxImage) return;
+  currentCiverPhotoIndex = (index + civerPhotoTiles.length) % civerPhotoTiles.length;
+  const tile = civerPhotoTiles[currentCiverPhotoIndex];
+  const image = tile.querySelector('img');
+  const src = tile.dataset.civerPhoto;
+  const caption = tile.dataset.civerCaption || image?.alt || 'CIVer Photo';
+
+  civerLightboxImage.src = src;
+  civerLightboxImage.alt = image?.alt || caption;
+  if (civerLightboxCaption) civerLightboxCaption.textContent = caption;
+  if (civerLightboxCounter) {
+    civerLightboxCounter.textContent = `${currentCiverPhotoIndex + 1} / ${civerPhotoTiles.length}`;
+  }
+}
+
+function openCiverLightbox(index) {
+  if (!civerLightbox) return;
+  renderCiverPhoto(index);
+  civerLightbox.classList.add('is-open');
+  civerLightbox.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('civer-lightbox-open');
+  civerLightbox.querySelector('.civer-lightbox-close')?.focus();
+}
+
+function closeCiverLightbox() {
+  if (!civerLightbox) return;
+  civerLightbox.classList.remove('is-open');
+  civerLightbox.setAttribute('aria-hidden', 'true');
+  document.body.classList.remove('civer-lightbox-open');
+}
+
+civerPhotoTiles.forEach((tile, index) => {
+  tile.addEventListener('click', () => openCiverLightbox(index));
+});
+
+civerCloseButtons.forEach((button) => {
+  button.addEventListener('click', closeCiverLightbox);
+});
+
+civerPrevButton?.addEventListener('click', () => renderCiverPhoto(currentCiverPhotoIndex - 1));
+civerNextButton?.addEventListener('click', () => renderCiverPhoto(currentCiverPhotoIndex + 1));
+
+window.addEventListener('keydown', (event) => {
+  if (!civerLightbox?.classList.contains('is-open')) return;
+  if (event.key === 'Escape') closeCiverLightbox();
+  if (event.key === 'ArrowLeft') renderCiverPhoto(currentCiverPhotoIndex - 1);
+  if (event.key === 'ArrowRight') renderCiverPhoto(currentCiverPhotoIndex + 1);
+});
