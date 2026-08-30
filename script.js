@@ -154,3 +154,77 @@ if (canUseMagneticEffect) {
     });
   });
 }
+
+// ============================================================
+// Portfolio YouTube modal player (EDUC 1 / EDUC 2)
+// ============================================================
+const videoModal = document.getElementById('videoModal');
+const portfolioYoutube = document.getElementById('portfolioYoutube');
+const videoModalTitle = document.getElementById('videoModalTitle');
+const videoExternalLink = document.getElementById('videoExternalLink');
+const videoCards = document.querySelectorAll('[data-youtube-id]');
+const videoCloseButtons = document.querySelectorAll('[data-video-close]');
+
+function openPortfolioVideo(card) {
+  if (!videoModal || !portfolioYoutube) return;
+
+  const youtubeId = card.dataset.youtubeId?.trim();
+  const title = card.dataset.videoTitle || 'Video Presentation';
+
+  // 아직 YouTube 주소를 넣지 않은 카드
+  if (!youtubeId || youtubeId.startsWith('YOUR_')) {
+    if (videoModalTitle) videoModalTitle.textContent = title;
+    portfolioYoutube.removeAttribute('src');
+    if (videoExternalLink) {
+      videoExternalLink.textContent = 'YouTube link not added yet';
+      videoExternalLink.removeAttribute('href');
+      videoExternalLink.classList.add('is-disabled');
+    }
+    videoModal.classList.add('is-open');
+    videoModal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('video-modal-open');
+    return;
+  }
+
+  const watchUrl = `https://www.youtube.com/watch?v=${youtubeId}`;
+  const embedUrl = `https://www.youtube-nocookie.com/embed/${youtubeId}?autoplay=1&playsinline=1&rel=0`;
+
+  portfolioYoutube.src = embedUrl;
+  portfolioYoutube.title = title;
+  if (videoModalTitle) videoModalTitle.textContent = title;
+  if (videoExternalLink) {
+    videoExternalLink.href = watchUrl;
+    videoExternalLink.textContent = 'Open on YouTube ↗';
+    videoExternalLink.classList.remove('is-disabled');
+  }
+
+  videoModal.classList.add('is-open');
+  videoModal.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('video-modal-open');
+}
+
+function closePortfolioVideo() {
+  if (!videoModal || !portfolioYoutube) return;
+
+  portfolioYoutube.removeAttribute('src');
+  videoModal.classList.remove('is-open');
+  videoModal.setAttribute('aria-hidden', 'true');
+  document.body.classList.remove('video-modal-open');
+}
+
+videoCards.forEach((card) => {
+  card.addEventListener('click', (event) => {
+    event.preventDefault();
+    openPortfolioVideo(card);
+  });
+});
+
+videoCloseButtons.forEach((button) => {
+  button.addEventListener('click', closePortfolioVideo);
+});
+
+window.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && videoModal?.classList.contains('is-open')) {
+    closePortfolioVideo();
+  }
+});
