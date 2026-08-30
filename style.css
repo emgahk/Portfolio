@@ -3260,3 +3260,15 @@ footer,
     flex: 0 0 auto !important;
   }
 }
+
+
+/* Mobile-only POSITION line break */
+.mobile-only-break {
+  display: none;
+}
+
+@media (max-width: 650px) {
+  .mobile-only-break {
+    display: block;
+  }
+}
