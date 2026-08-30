@@ -1472,3 +1472,434 @@ section {
 .pub-item:hover h3 a {
   opacity: 1;
 }
+
+
+/* ===== ABOUT 장문 가독성 개선 ===== */
+.about-story {
+  max-width: 720px;
+  margin-top: 32px;
+}
+
+.about-story p {
+  margin: 0 0 1.7em;
+  color: #4f5870;
+  font-size: 1rem;
+  line-height: 1.9;
+  letter-spacing: 0.005em;
+  text-wrap: pretty;
+}
+
+.about-story p:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 650px) {
+  .about-story {
+    margin-top: 24px;
+  }
+
+  .about-story p {
+    font-size: 0.98rem;
+    line-height: 1.85;
+    margin-bottom: 1.55em;
+  }
+}
+
+
+/* ===== TEACHING PHILOSOPHY 장문 가독성 개선 =====
+   각 카드의 긴 본문을 의미 단위 문단으로 분리하고,
+   문단 간 여백과 행간을 확보해 읽는 흐름을 개선합니다. */
+.philosophy-copy {
+  margin-top: 18px;
+}
+
+.philosophy-copy p {
+  margin: 0 0 1.45em;
+  color: rgba(255, 255, 255, 0.78);
+  line-height: 1.82;
+  font-size: 0.96rem;
+  letter-spacing: 0.002em;
+  text-wrap: pretty;
+}
+
+.philosophy-copy p:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 980px) {
+  .philosophy-copy p {
+    max-width: 760px;
+  }
+}
+
+@media (max-width: 650px) {
+  .philosophy-card {
+    padding: 30px 24px;
+  }
+
+  .philosophy-copy {
+    margin-top: 15px;
+  }
+
+  .philosophy-copy p {
+    font-size: 0.95rem;
+    line-height: 1.78;
+    margin-bottom: 1.35em;
+  }
+}
+
+
+/* ===== HERO 제목 줄바꿈 =====
+   Kenn Arcenal과 CTP Student를 각각 독립된 줄로 표시 */
+.hero-name,
+.hero-role {
+  display: block;
+}
+
+.hero-role {
+  margin-top: 0.14em;
+}
+
+
+/* ==========================================================
+   SECTION COLOR BALANCE
+   Teaching / Portfolio의 큰 색면 대비를 부드럽게 연결
+   ========================================================== */
+
+/* 1) TEACHING PHILOSOPHY
+   기존의 진한 파란색 전체 배경 대신,
+   아주 옅은 블루-오프화이트 배경 위에 파란 카드만 강조합니다. */
+.teaching {
+  background:
+    linear-gradient(
+      180deg,
+      #f8faff 0%,
+      #eef3fb 48%,
+      #f7f9fd 100%
+    );
+  color: var(--ink);
+}
+
+/* 기존 light heading이 흰색으로 되어 있으므로 밝은 배경에 맞게 재설정 */
+.teaching .section-heading.light {
+  color: var(--blue-deep);
+}
+
+.teaching .section-heading.light .section-index {
+  color: var(--blue);
+}
+
+.teaching .section-heading.light h2 {
+  color: var(--blue-deep);
+}
+
+/* 철학 카드: 파란색은 유지하되 너무 무거워 보이지 않게 약간 밝은 그라데이션 */
+.teaching .philosophy-card {
+  background:
+    linear-gradient(
+      145deg,
+      #36589f 0%,
+      #284889 52%,
+      #203b75 100%
+    );
+  color: var(--white);
+  border-top: 3px solid rgba(255, 222, 23, 0.88);
+  box-shadow: 0 12px 30px rgba(38, 69, 142, 0.10);
+}
+
+/* 카드 사이가 너무 딱 붙어 보이지 않도록 아주 미세한 푸른 경계 */
+.teaching .philosophy-grid {
+  background: rgba(38, 69, 142, 0.10);
+  border-color: rgba(38, 69, 142, 0.10);
+}
+
+/* Selected Courses도 어두운 배경 전용 색상에서 밝은 배경용으로 변경 */
+.teaching .courses-title {
+  color: var(--blue-deep);
+  border-bottom-color: rgba(38, 69, 142, 0.22);
+}
+
+.teaching .course-item {
+  color: var(--blue-deep);
+  border-bottom-color: rgba(38, 69, 142, 0.16);
+}
+
+.teaching .course-item em {
+  color: var(--muted);
+  opacity: 1;
+}
+
+.teaching .course-item:hover {
+  background: rgba(38, 69, 142, 0.055);
+}
+
+
+/* 2) PORTFOLIO
+   완전한 흰색 배경 대신 카드와 자연스럽게 이어지는
+   아주 옅은 블루-그레이 배경을 사용합니다. */
+.portfolio {
+  background:
+    linear-gradient(
+      180deg,
+      #f7f9fd 0%,
+      #edf2fa 50%,
+      #f8faff 100%
+    );
+}
+
+/* 연속되는 Portfolio 섹션 사이의 구분선도 푸른 톤으로 정리 */
+.portfolio + .portfolio::before {
+  background:
+    linear-gradient(
+      to right,
+      transparent,
+      rgba(38, 69, 142, 0.16) 15%,
+      rgba(38, 69, 142, 0.16) 85%,
+      transparent
+    );
+}
+
+/* 파란 카드는 유지하되 배경과 충돌하지 않도록
+   조금 부드러운 중간 블루에서 딥블루로 연결 */
+.portfolio .portfolio-pdf-card {
+  background:
+    linear-gradient(
+      145deg,
+      #3a5da4 0%,
+      #2d4f93 46%,
+      #243f7d 100%
+    );
+  border-color: rgba(38, 69, 142, 0.18);
+  box-shadow: 0 10px 24px rgba(38, 69, 142, 0.08);
+}
+
+/* Hover도 지나치게 강하지 않게 */
+.portfolio .portfolio-pdf-card:hover {
+  border-color: rgba(255, 222, 23, 0.72);
+  box-shadow: 0 18px 38px rgba(38, 69, 142, 0.18);
+  filter: brightness(1.035);
+}
+
+/* Portfolio heading은 로고 블루 계열로 자연스럽게 연결 */
+.portfolio .section-index {
+  color: var(--blue);
+}
+
+.portfolio .section-heading h2,
+.portfolio .section-heading2 h4 {
+  color: var(--blue-deep);
+}
+
+
+/* 3) RESEARCH → PORTFOLIO 연결감을 위한 아주 미세한 마감 */
+.research {
+  background: transparent;
+}
+
+/* 섹션 전환이 급하게 보이지 않도록 배경색 흐름을 유지 */
+#research {
+  padding-bottom: 95px;
+}
+
+#portfolio-1 {
+  padding-top: 90px;
+}
+
+
+/* 모바일에서는 배경 변화가 더 부드럽게 느껴지도록 여백 조정 */
+@media (max-width: 650px) {
+  .teaching,
+  .portfolio {
+    background-attachment: scroll;
+  }
+
+  #portfolio-1 {
+    padding-top: 80px;
+  }
+}
+
+
+/* ==========================================================
+   ABOUT PHOTO — 자연스러운 스크롤 따라오기
+   기존 top:110px에서 바로 '걸리는' 느낌을 줄이고,
+   화면 높이에 따라 조금 더 아래에서 자연스럽게 따라옵니다.
+   ========================================================== */
+
+.about-sticky {
+  position: sticky;
+  top: clamp(135px, 18vh, 190px);
+  align-self: start;
+  will-change: transform;
+}
+
+/* 사진 자체가 살짝 떠 있는 느낌 */
+.about-sticky .mini-photo {
+  transform: translateZ(0);
+  transition:
+    transform 0.35s cubic-bezier(.2, .65, .3, 1),
+    box-shadow 0.35s ease;
+}
+
+/* 마우스 환경에서는 아주 미세한 깊이감만 추가 */
+@media (hover: hover) and (pointer: fine) {
+  .about-sticky .mini-photo:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 34px rgba(38, 69, 142, 0.10);
+  }
+}
+
+/* 태블릿에서는 너무 오래 따라오지 않도록 조금 낮춤 */
+@media (max-width: 980px) {
+  .about-sticky {
+    position: relative;
+    top: auto;
+  }
+}
+
+/* 모바일에서는 기존처럼 일반 흐름으로 표시 */
+@media (max-width: 650px) {
+  .about-sticky {
+    position: relative;
+    top: auto;
+  }
+}
+
+
+/* ==========================================================
+   PORTFOLIO DROPDOWN — 현재 EDUC 섹션 표시
+   일반 상단 메뉴는 기존 밑줄 active 효과를 유지하고,
+   Portfolio 하위 EDUC 1/2/3만 배경색 + 글자색으로 표시합니다.
+   ========================================================== */
+
+/* 하위 메뉴에서는 active 밑줄 제거 */
+.portfolio-dropdown-menu a.active::after {
+  display: none;
+}
+
+/* 현재 보고 있는 EDUC 항목 */
+.portfolio-dropdown-menu a.active {
+  color: var(--blue-deep);
+  background: var(--yellow-soft);
+  opacity: 1;
+  font-weight: 700;
+  border-radius: 7px;
+}
+
+/* 현재 항목 hover 시에도 색상 유지 */
+.portfolio-dropdown-menu a.active:hover {
+  color: var(--blue-deep);
+  background: var(--yellow);
+}
+
+/* 일반 EDUC 항목 hover는 아주 옅은 브랜드 블루 */
+.portfolio-dropdown-menu a:not(.active):hover {
+  background: rgba(38, 69, 142, 0.07);
+  color: var(--blue-deep);
+  opacity: 1;
+}
+
+
+/* ==========================================================
+   Portfolio EDUC 현재 위치 색상
+   다른 EDUC 메뉴에 마우스를 올렸을 때 나타나는 hover 색과 동일하게 통일
+   ========================================================== */
+.portfolio-dropdown-menu a.active,
+.portfolio-dropdown-menu a.active:hover {
+  color: var(--blue-deep);
+  background: rgba(38, 69, 142, 0.07);
+  opacity: 1;
+  font-weight: 700;
+  border-radius: 7px;
+}
+
+/* active 상태에서는 기존 밑줄 효과 사용하지 않음 */
+.portfolio-dropdown-menu a.active::after {
+  display: none;
+}
+
+
+/* ==========================================================
+   PORTFOLIO DROPDOWN BACKGROUND
+   페이지 배경은 그대로 두고, Portfolio 하단 메뉴만
+   상단 메뉴/헤더와 같은 깨끗한 화이트 계열로 통일
+   ========================================================== */
+.portfolio-dropdown-menu {
+  background: rgba(255, 255, 255, 0.97);
+  border: 1px solid rgba(38, 69, 142, 0.10);
+  box-shadow: 0 12px 32px rgba(23, 33, 61, 0.09);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+/* EDUC 항목 기본 상태 */
+.portfolio-dropdown-menu a {
+  color: var(--ink);
+}
+
+/* hover 및 현재 위치 표시는 기존의 옅은 PNU Blue로 유지 */
+.portfolio-dropdown-menu a:not(.active):hover,
+.portfolio-dropdown-menu a.active,
+.portfolio-dropdown-menu a.active:hover {
+  background: rgba(38, 69, 142, 0.07);
+  color: var(--blue-deep);
+}
+
+
+/* ==========================================================
+   HERO TITLE SPACING
+   상단 소개 문구 / Kenn Arcenal / CTP Student
+   세 줄 사이의 간격을 각각 여유 있게 조정
+   ========================================================== */
+
+/* 기존 h1 margin을 재조정 */
+.hero h1 {
+  margin-top: 34px;
+  margin-bottom: 34px;
+}
+
+/* 이름과 CTP Student를 확실히 독립된 줄로 유지 */
+.hero-name,
+.hero-role {
+  display: block;
+}
+
+/* Kenn Arcenal 아래 여백 */
+.hero-name {
+  margin-bottom: 0.22em;
+}
+
+/* CTP Student 자체에는 중복 margin 제거 */
+.hero-role {
+  margin-top: 0;
+}
+
+/* 작은 화면에서는 간격이 과도해지지 않도록 조정 */
+@media (max-width: 650px) {
+  .hero h1 {
+    margin-top: 28px;
+    margin-bottom: 30px;
+  }
+
+  .hero-name {
+    margin-bottom: 0.18em;
+  }
+}
+
+
+/* ==========================================================
+   BACK TO TOP
+   fixed header가 아닌 실제 hero 섹션으로 이동하도록 연결
+   ========================================================== */
+.back-to-top {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 0;
+  cursor: pointer;
+  transition: opacity .25s ease, transform .25s ease;
+}
+
+.back-to-top:hover {
+  opacity: .65;
+  transform: translateY(-2px);
+}
