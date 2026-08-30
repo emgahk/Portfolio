@@ -3304,3 +3304,19 @@ footer,
     box-shadow: none !important;
   }
 }
+
+/* ==========================================================
+   TEXT SELECTION — adaptive contrast
+   Light areas: subtle PNU blue / dark blue areas: translucent yellow
+   ========================================================== */
+::selection {
+  background: rgba(38, 69, 142, 0.16);
+  color: inherit;
+}
+
+.portfolio-pdf-card ::selection,
+.philosophy-card ::selection,
+.contact ::selection {
+  background: rgba(255, 222, 23, 0.48);
+  color: inherit;
+}
