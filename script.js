@@ -331,3 +331,35 @@ if (menuToggle && mainNav) {
     }
   }, { passive: true });
 }
+
+// ============================================================
+// Mobile/tablet navigation viewport mounting
+// On some mobile browsers, backdrop-filter on a fixed header makes a
+// position:fixed descendant use the header as its containing block.
+// Mount the mobile nav directly under <body> so it always fills the viewport,
+// even when opened after the page has been scrolled.
+// ============================================================
+if (mainNav) {
+  const navHomeParent = mainNav.parentNode;
+  const navHomeMarker = document.createComment('main-nav-home');
+  navHomeParent?.insertBefore(navHomeMarker, mainNav);
+  const mobileNavMedia = window.matchMedia('(max-width: 980px)');
+
+  function syncMainNavMount() {
+    if (mobileNavMedia.matches) {
+      if (mainNav.parentNode !== document.body) {
+        document.body.appendChild(mainNav);
+      }
+    } else if (navHomeMarker.parentNode && mainNav.parentNode !== navHomeMarker.parentNode) {
+      navHomeMarker.parentNode.insertBefore(mainNav, navHomeMarker.nextSibling);
+    }
+  }
+
+  syncMainNavMount();
+
+  if (typeof mobileNavMedia.addEventListener === 'function') {
+    mobileNavMedia.addEventListener('change', syncMainNavMount);
+  } else if (typeof mobileNavMedia.addListener === 'function') {
+    mobileNavMedia.addListener(syncMainNavMount);
+  }
+}
