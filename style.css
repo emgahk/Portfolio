@@ -3262,13 +3262,41 @@ footer,
 }
 
 
-/* Mobile-only POSITION line break */
-.mobile-only-break {
-  display: none;
+
+
+/* ==========================================================
+   POSITION — guaranteed mobile-only line break
+   Uses a dedicated span instead of <br> so the break cannot be
+   lost to browser/display quirks. Overrides generic profile span badge styles.
+   ========================================================== */
+.profile-list dd.position-value .position-department {
+  display: inline;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+  border: 0;
+  border-radius: 0;
+  white-space: normal;
+}
+
+.profile-list dd.position-value .position-department::before {
+  content: " ";
 }
 
 @media (max-width: 650px) {
-  .mobile-only-break {
-    display: block;
+  .profile-list dd.position-value .position-department {
+    display: block !important;
+    width: 100%;
+    white-space: nowrap;
+  }
+
+  .profile-list dd.position-value .position-department::before {
+    content: "";
   }
 }
