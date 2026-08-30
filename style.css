@@ -2735,3 +2735,255 @@ footer,
     font-size: 1.35rem;
   }
 }
+
+/* ==========================================================
+   MOBILE / TABLET NAVIGATION + CONTENT SAFETY FIXES
+   2026-08-30
+   ========================================================== */
+.mobile-only {
+  display: none;
+}
+
+/* Tablet and mobile navigation is a real overlay panel.
+   Closed navigation is fully hidden, so Portfolio / Contact cannot
+   float over the page while scrolling. */
+@media (max-width: 980px) {
+  .site-header {
+    z-index: 1900;
+  }
+
+  .menu-toggle {
+    position: relative;
+    z-index: 2002;
+    flex: 0 0 auto;
+  }
+
+  .main-nav {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    padding: 96px clamp(22px, 6vw, 56px) 42px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: 8px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    background:
+      linear-gradient(180deg, rgba(248,250,255,.99), rgba(238,243,251,.99));
+    font-size: 1.05rem;
+    letter-spacing: .055em;
+    transform: translateY(-10px);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition:
+      opacity .28s ease,
+      transform .32s cubic-bezier(.2,.65,.3,1),
+      visibility .28s ease;
+  }
+
+  .main-nav.open {
+    transform: none;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .main-nav > a,
+  .main-nav > .portfolio-dropdown {
+    width: min(100%, 560px);
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .main-nav > a {
+    display: flex;
+    align-items: center;
+    min-height: 54px;
+    padding: 12px 18px;
+    border: 1px solid rgba(38,69,142,.11);
+    border-radius: 14px;
+    background: rgba(255,255,255,.72);
+    color: var(--blue-deep);
+    font-weight: 600;
+  }
+
+  .main-nav > a::after {
+    display: none;
+  }
+
+  .main-nav > a:hover,
+  .main-nav > a.active {
+    background: rgba(38,69,142,.075);
+  }
+
+  .portfolio-dropdown {
+    display: block;
+    align-items: initial;
+    padding: 8px;
+    border: 1px solid rgba(38,69,142,.13);
+    border-radius: 18px;
+    background: rgba(255,255,255,.78);
+  }
+
+  .portfolio-main-link {
+    display: flex;
+    width: 100%;
+    height: auto;
+    padding: 10px 10px 8px;
+    color: var(--muted);
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    cursor: default;
+  }
+
+  .portfolio-main-link .dropdown-arrow {
+    display: none;
+  }
+
+  .portfolio-dropdown-menu,
+  .portfolio-dropdown:hover .portfolio-dropdown-menu {
+    position: static;
+    top: auto;
+    left: auto;
+    width: 100%;
+    min-width: 0;
+    padding: 4px 2px 2px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 7px;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .portfolio-dropdown-menu a,
+  .portfolio-dropdown-menu a.active,
+  .portfolio-dropdown-menu a.active:hover,
+  .portfolio-dropdown-menu a:not(.active):hover {
+    width: 100%;
+    min-width: 0;
+    min-height: 46px;
+    height: auto;
+    padding: 10px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 11px;
+    background: rgba(38,69,142,.055);
+    color: var(--blue-deep);
+    font-size: .82rem;
+    font-weight: 600;
+    line-height: 1.25;
+    text-align: center;
+    opacity: 1;
+    overflow-wrap: anywhere;
+  }
+
+  .portfolio-dropdown-menu a.active {
+    background: rgba(38,69,142,.12);
+  }
+
+  .portfolio-dropdown-menu a::after,
+  .portfolio-dropdown-menu a.active::after {
+    display: none;
+  }
+}
+
+@media (max-width: 650px) {
+  /* About heading: stack the two title lines so Kenn Arcenal never clips. */
+  .about .section-heading2 {
+    display: block;
+    width: 100%;
+  }
+
+  .about .section-heading2 h2 {
+    margin-bottom: 10px;
+  }
+
+  .about .section-heading2 h4 {
+    max-width: 100%;
+    margin-top: 0;
+    font-size: clamp(2.1rem, 10.4vw, 3.25rem);
+    line-height: 1.02;
+    letter-spacing: -.045em;
+    white-space: nowrap;
+  }
+
+  /* Profile list gets more room for values on narrow phones. */
+  .profile-list > div {
+    grid-template-columns: 96px minmax(0, 1fr);
+    gap: 14px;
+  }
+
+  .mobile-only {
+    display: block;
+  }
+
+  .mobile-nowrap {
+    white-space: nowrap;
+  }
+
+  /* EDUC 1 / 2 video cards: keep subtitles away from the play button. */
+  .portfolio-video-card {
+    min-height: 250px;
+  }
+
+  .portfolio-video-card .portfolio-card-content {
+    min-width: 0;
+    padding-right: 56px;
+    padding-bottom: 22px;
+  }
+
+  .portfolio-video-card .video-card-subtitle {
+    max-width: 100%;
+    line-height: 1.55;
+  }
+
+  .portfolio-video-card .mobile-break {
+    display: block;
+  }
+
+  .portfolio-video-card .portfolio-play-icon {
+    right: 20px;
+    bottom: 20px;
+  }
+
+  /* Mobile menu: one clear item per row for reliable tapping. */
+  .main-nav {
+    padding: 86px 18px 34px;
+  }
+
+  .portfolio-dropdown-menu,
+  .portfolio-dropdown:hover .portfolio-dropdown-menu {
+    grid-template-columns: 1fr;
+  }
+
+  .main-nav > a {
+    min-height: 50px;
+  }
+}
+
+@media (max-width: 390px) {
+  .about .section-heading2 h4 {
+    font-size: clamp(1.95rem, 9.8vw, 2.55rem);
+  }
+
+  .profile-list > div {
+    grid-template-columns: 88px minmax(0, 1fr);
+    gap: 12px;
+  }
+}

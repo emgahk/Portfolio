@@ -304,3 +304,38 @@ window.addEventListener('keydown', (event) => {
   if (event.key === 'ArrowLeft') renderCiverPhoto(currentCiverPhotoIndex - 1);
   if (event.key === 'ArrowRight') renderCiverPhoto(currentCiverPhotoIndex + 1);
 });
+
+// ============================================================
+// Mobile / tablet navigation safety
+// Keeps the overlay state consistent across resize and Escape.
+// ============================================================
+function closeResponsiveMenu() {
+  if (!mainNav || !menuToggle) return;
+  mainNav.classList.remove('open');
+  menuToggle.classList.remove('active');
+  menuToggle.setAttribute('aria-expanded', 'false');
+  menuToggle.setAttribute('aria-label', '메뉴 열기');
+  document.body.classList.remove('menu-open');
+}
+
+if (menuToggle && mainNav) {
+  menuToggle.addEventListener('click', () => {
+    window.requestAnimationFrame(() => {
+      const isOpen = mainNav.classList.contains('open');
+      menuToggle.setAttribute('aria-label', isOpen ? '메뉴 닫기' : '메뉴 열기');
+    });
+  });
+
+  window.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && mainNav.classList.contains('open')) {
+      closeResponsiveMenu();
+      menuToggle.focus();
+    }
+  });
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 980 && mainNav.classList.contains('open')) {
+      closeResponsiveMenu();
+    }
+  }, { passive: true });
+}
